@@ -47,7 +47,8 @@ const SignUp = () => {
               id="name"
               type="text"
               name="name"
-              className="border rounded-[8px] border-[#D9D8DD] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal "
+              onChange={(e) => setName(e.target.value)}
+              className="border rounded-[8px] border-[#D9D8DD] focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal "
               placeholder="What is your name"
             />
           </div>
@@ -59,8 +60,9 @@ const SignUp = () => {
               id="email"
               type="email"
               name="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="border rounded-[8px] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
             />
           </div>
           <div className="flex flex-col justify-center gap-[8px]">
@@ -72,7 +74,8 @@ const SignUp = () => {
               name="password"
               type="password"
               placeholder="Enter your password"
-              className="border rounded-[8px] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              onChange={(e) => setPassword(e.target.value)}
+              className="border rounded-[8px] border-[#D9D8DD] focus:border-[#6172F3]  placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
             />
           </div>
 
@@ -85,9 +88,10 @@ const SignUp = () => {
         </form>
         {/* FORM */}
         <p className="mt-[16px] mb-[24px] sfont-medium flex items-center justify-center">
-          Already have an account?{" "}
+          <span>Already have an account?</span>{" "}
           <Link to="/login">
-            <span className="text-[#6172F3]">login</span>
+            {" "}
+            <span className="text-[#6172F3] pl-[2px]">login</span>
           </Link>
         </p>
       </main>

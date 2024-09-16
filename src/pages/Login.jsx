@@ -46,8 +46,9 @@ const Login = () => {
               id="email"
               type="email"
               name="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="border rounded-[8px] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
             />
           </div>
           <div className="flex flex-col justify-center gap-[8px]">
@@ -58,8 +59,9 @@ const Login = () => {
               id="password"
               name="password"
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="border rounded-[8px] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
             />
           </div>
 
@@ -74,7 +76,7 @@ const Login = () => {
         <p className="mt-[16px] mb-[24px] sfont-medium flex items-center justify-center">
           Don't have an account?{" "}
           <Link to="/signup">
-            <span className="text-[#6172F3]">Sign up</span>
+            <span className="text-[#6172F3] pl-[2px]">Sign up</span>
           </Link>
         </p>
       </main>
