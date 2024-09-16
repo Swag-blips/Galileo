@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from "/logo.svg";
 import twitter from "/twitter.svg";
+import { Link } from "react-router-dom";
 import google from "/google.svg";
 
 const SignUp = () => {
@@ -84,7 +85,10 @@ const SignUp = () => {
         </form>
         {/* FORM */}
         <p className="mt-[16px] mb-[24px] sfont-medium flex items-center justify-center">
-          Already have an account? <span className="text-[#6172F3]">login</span>
+          Already have an account?{" "}
+          <Link to="/login">
+            <span className="text-[#6172F3]">login</span>
+          </Link>
         </p>
       </main>
     </section>
