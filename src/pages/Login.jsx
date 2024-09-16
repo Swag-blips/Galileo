@@ -3,10 +3,15 @@ import logo from "/logo.svg";
 import twitter from "/twitter.svg";
 import google from "/google.svg";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <section className="flex items-center  flex-col justify-center mt-[92px]">
@@ -37,7 +42,10 @@ const Login = () => {
           <hr className="border-[0.1px] font-light w-full border-[#ecebee]" />
         </div>
         {/* FORM */}
-        <form className="flex flex-col mt-[24px] capitalize gap-[24px] justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col mt-[24px] capitalize gap-[24px] justify-center"
+        >
           <div className="flex flex-col justify-center gap-[8px]">
             <label className="text-[16px] font-medium" htmlFor="email">
               Email*
@@ -45,6 +53,7 @@ const Login = () => {
             <input
               id="email"
               type="email"
+              value={email || ""}
               name="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
@@ -59,6 +68,7 @@ const Login = () => {
               id="password"
               name="password"
               type="password"
+              value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
@@ -74,7 +84,7 @@ const Login = () => {
         </form>
         {/* FORM */}
         <p className="mt-[16px] mb-[24px] sfont-medium flex items-center justify-center">
-          Don't have an account?{" "}
+          Don't have an account?&nbsp;
           <Link to="/signup">
             <span className="text-[#6172F3] pl-[2px]">Sign up</span>
           </Link>

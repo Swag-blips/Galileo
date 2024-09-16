@@ -3,11 +3,18 @@ import logo from "/logo.svg";
 import twitter from "/twitter.svg";
 import { Link } from "react-router-dom";
 import google from "/google.svg";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("FORM SUBMITTED!");
+  };
 
   return (
     <section className="flex items-center  flex-col justify-center mt-[92px]">
@@ -38,7 +45,10 @@ const SignUp = () => {
           <hr className="border-[0.1px] font-light w-full border-[#ecebee]" />
         </div>
         {/* FORM */}
-        <form className="flex flex-col mt-[24px] capitalize gap-[24px] justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col mt-[24px] capitalize gap-[24px] justify-center"
+        >
           <div className="flex flex-col justify-center gap-[8px]">
             <label className="text-[16px] font-medium" htmlFor="name">
               Name*
@@ -47,6 +57,7 @@ const SignUp = () => {
               id="name"
               type="text"
               name="name"
+              value={name || ""}
               onChange={(e) => setName(e.target.value)}
               className="border rounded-[8px] border-[#D9D8DD] focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal "
               placeholder="What is your name"
@@ -59,6 +70,7 @@ const SignUp = () => {
             <input
               id="email"
               type="email"
+              value={email || ""}
               name="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
@@ -73,6 +85,7 @@ const SignUp = () => {
               id="password"
               name="password"
               type="password"
+              value={password || ""}
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
               className="border rounded-[8px] border-[#D9D8DD] focus:border-[#6172F3]  placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
@@ -88,10 +101,9 @@ const SignUp = () => {
         </form>
         {/* FORM */}
         <p className="mt-[16px] mb-[24px] sfont-medium flex items-center justify-center">
-          <span>Already have an account?</span>{" "}
+          <span>Already have an account?</span>&nbsp;
           <Link to="/login">
-            {" "}
-            <span className="text-[#6172F3] pl-[2px]">login</span>
+            <span className="text-[#6172F3] p">login</span>
           </Link>
         </p>
       </main>
