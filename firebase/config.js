@@ -1,5 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  TwitterAuthProvider,
+} from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -10,8 +15,11 @@ const firebaseConfig = {
   projectId: "galelio-a85ea",
   storageBucket: "galelio-a85ea.appspot.com",
   messagingSenderId: "546578631370",
-  appId: "1:546578631370:web:1321c462de8bb656a64233"
+  appId: "1:546578631370:web:1321c462de8bb656a64233",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const googleAuth = new GoogleAuthProvider();
+export const twitterAuth = new TwitterAuthProvider();

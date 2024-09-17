@@ -8,3 +8,27 @@ body {
   font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
 }
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #fff;
+  animation: spin 1s ease infinite;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

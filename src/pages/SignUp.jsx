@@ -4,16 +4,65 @@ import twitter from "/twitter.svg";
 import { Link } from "react-router-dom";
 import google from "/google.svg";
 import toast from "react-hot-toast";
+import { validation } from "../utils/validation";
+import Spinner from "../../helpers/Spinner";
+import { auth, googleAuth, twitterAuth } from "../../firebase/config";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("FORM SUBMITTED!");
+    setLoading(true);
+
+    try {
+      if (validation(email, password, name, setErrors)) {
+        const user = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        toast.success("User created successfully");
+
+        if (user) {
+          console.log(user);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const googleSignIn = async () => {
+    try {
+      const user = await signInWithPopup(auth, googleAuth);
+      toast.success("Sign up with google successful");
+      setPhotoUrl(user.user.photoURL);
+      setDisplayName(user.user.displayName);
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error.message);
+    }
+  };
+
+  const twitterSignIn = async () => {
+    try {
+      const user = await signInWithPopup(auth, twitterAuth);
+      toast.success("signin with twitter successful");
+      console.log(user);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -22,16 +71,25 @@ const SignUp = () => {
         <img src={logo} alt="logo" />
       </figure>
 
+      <img src={photoURL} />
+      <p>{displayName}</p>
+
       <main className="bg-white rounded-[16px] mt-[32px] px-[16px] w-[404px] drop-shadow-[0_0px_.6px_rgba(0,0,0,0.25)]">
         {/* Auth buttons */}
         <div className="mt-[24px] gap-[16px] flex flex-col items-center ">
-          <button className="flex w-full py-[12px] justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]">
+          <button
+            onClick={googleSignIn}
+            className="flex w-full py-[12px] justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]"
+          >
             <img src={google} alt="google-sigin" />
             <p className="text-[#353333] font-medium text-center text-[14px]">
               sign up with google
             </p>
           </button>
-          <button className="flex w-full py-[12px]  justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]">
+          <button
+            onClick={twitterSignIn}
+            className="flex w-full py-[12px]  justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]"
+          >
             <img src={twitter} alt="google-sigin" />
             <p className="text-[#353333] font-medium text-center text-[14px]">
               sign up with twitter
@@ -59,9 +117,16 @@ const SignUp = () => {
               name="name"
               value={name || ""}
               onChange={(e) => setName(e.target.value)}
-              className="border rounded-[8px] border-[#D9D8DD] focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal "
+              className={`border rounded-[8px] ${
+                errors.name ? "border-[#F84D4D]" : "border-[#D9D8DD] "
+              } focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal `}
               placeholder="What is your name"
             />
+            {errors.name && (
+              <p className="text-[#F84D4D] text-left text-[14px] font-medium">
+                {errors.name}
+              </p>
+            )}
           </div>
           <div className="flex flex-col justify-center gap-[8px]">
             <label className="text-[16px] font-medium" htmlFor="email">
@@ -74,8 +139,16 @@ const SignUp = () => {
               name="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className={`border rounded-[8px] ${
+                errors.email ? "border-[#F84D4D]" : "border-[#D9D8DD] "
+              } focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal `}
             />
+
+            {errors.email && (
+              <p className="text-[#F84D4D] text-left text-[14px] font-medium">
+                {errors.email}
+              </p>
+            )}
           </div>
           <div className="flex flex-col justify-center gap-[8px]">
             <label className="text-[16px] font-medium" htmlFor="password">
@@ -88,15 +161,22 @@ const SignUp = () => {
               value={password || ""}
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
-              className="border rounded-[8px] border-[#D9D8DD] focus:border-[#6172F3]  placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className={`border rounded-[8px] ${
+                errors.password ? "border-[#F84D4D]" : "border-[#D9D8DD] "
+              } focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal `}
             />
+            {errors.password && (
+              <p className="text-[#F84D4D] text-left text-[14px] font-medium">
+                {errors.password}
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
             className="bg-[#6172F3] text-white rounded-[8px] py-[16px]"
           >
-            Sign up
+            {loading ? <Spinner /> : "Sign up"}
           </button>
         </form>
         {/* FORM */}
