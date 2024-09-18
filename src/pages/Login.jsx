@@ -3,14 +3,34 @@ import logo from "/logo.svg";
 import twitter from "/twitter.svg";
 import google from "/google.svg";
 import { Link } from "react-router-dom";
+import { loginValidation } from "../utils/validation";
 import toast from "react-hot-toast";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [loading, setloading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
+    try {
+      if (loginValidation(email, password, setErrors)) {
+        const user = await signInWithEmailAndPassword(auth, email, password);
+        toast.success("login successful");
+        console.log(user);
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    } finally {
+      setloading(false);
+    }
   };
 
   return (
@@ -57,8 +77,15 @@ const Login = () => {
               name="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className={`border rounded-[8px] ${
+                errors.password ? "border-[#F84D4D]" : "border-[#D9D8DD] "
+              } focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal `}
             />
+            {errors.email && (
+              <p className="text-[#F84D4D] text-left text-[14px] font-medium">
+                {errors.email}
+              </p>
+            )}
           </div>
           <div className="flex flex-col justify-center gap-[8px]">
             <label className="text-[16px] font-medium" htmlFor="password">
@@ -71,8 +98,15 @@ const Login = () => {
               value={password || ""}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="border rounded-[8px] focus:border-[#6172F3] border-[#D9D8DD] placeholder-[#AFAFAF] py-[14px] outline-none pl-[12px] placeholder:font-normal"
+              className={`border rounded-[8px] ${
+                errors.password ? "border-[#F84D4D]" : "border-[#D9D8DD] "
+              } focus:border-[#6172F3] py-[14px] outline-none pl-[12px] placeholder-[#AFAFAF] placeholder:font-normal `}
             />
+            {errors.password && (
+              <p className="text-[#F84D4D] text-left text-[14px] font-medium">
+                {errors.password}
+              </p>
+            )}
           </div>
 
           <button

@@ -33,6 +33,8 @@ const SignUp = () => {
         if (user) {
           console.log(user);
         }
+      } else {
+        return;
       }
     } catch (error) {
       console.error(error);
@@ -70,9 +72,6 @@ const SignUp = () => {
       <figure>
         <img src={logo} alt="logo" />
       </figure>
-
-      <img src={photoURL} />
-      <p>{displayName}</p>
 
       <main className="bg-white rounded-[16px] mt-[32px] px-[16px] w-[404px] drop-shadow-[0_0px_.6px_rgba(0,0,0,0.25)]">
         {/* Auth buttons */}

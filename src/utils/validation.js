@@ -22,3 +22,23 @@ export const validation = (email, password, name, setErrors) => {
   setErrors(newError);
   return isValid;
 };
+
+export const loginValidation = (email, password, setErrors) => {
+  let isValid = true;
+  let newError = { email: "", password: "" };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!password || password.length < 6) {
+    newError.password = "Password must be at least 8 characters";
+    isValid = false;
+  }
+
+  if (!email || !emailRegex.test(email)) {
+    newError.email = "incorrect email format";
+    isValid = false;
+  }
+
+  setErrors(newError);
+  return isValid;
+};
