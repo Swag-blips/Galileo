@@ -3,6 +3,7 @@ import logo from "/logo.svg";
 import twitter from "/twitter.svg";
 import google from "/google.svg";
 import { Link } from "react-router-dom";
+import Spinner from "../../helpers/Spinner";
 import { loginValidation } from "../utils/validation";
 import toast from "react-hot-toast";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
@@ -55,14 +56,14 @@ const Login = () => {
   };
 
   return (
-    <section className="flex items-center  flex-col justify-center mt-[92px]">
+    <section className="flex items-center  flex-col justify-center mt-[24px] md:mt-[92px]">
       <figure>
         <img src={logo} alt="logo" />
       </figure>
 
-      <main className="bg-white rounded-[16px] mt-[32px] px-[16px] w-[404px] drop-shadow-[0_0px_.6px_rgba(0,0,0,0.25)]">
+      <main className="bg-white rounded-[16px] md:mt-[32px] mt-[24px] px-[16px] w-full md:w-[404px] md:drop-shadow-[0_0px_.6px_rgba(0,0,0,0.25)]">
         {/* Auth buttons */}
-        <div className="mt-[24px] gap-[16px] flex flex-col items-center ">
+        <div className="md:mt-[24px] gap-[16px] flex flex-col items-center ">
           <button
             onClick={googleSignIn}
             className="flex w-full py-[12px] justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]"
@@ -140,7 +141,7 @@ const Login = () => {
             type="submit"
             className="bg-[#6172F3] text-white rounded-[8px] py-[16px]"
           >
-            Login
+            {loading ? <Spinner /> : "login"}
           </button>
         </form>
         {/* FORM */}
