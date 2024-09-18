@@ -5,8 +5,8 @@ import google from "/google.svg";
 import { Link } from "react-router-dom";
 import { loginValidation } from "../utils/validation";
 import toast from "react-hot-toast";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase/config";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleAuth, twitterAuth } from "../../firebase/config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +33,27 @@ const Login = () => {
     }
   };
 
+  const googleSignIn = async () => {
+    try {
+      const user = await signInWithPopup(auth, googleAuth);
+      toast.success("Sign in with google successful");
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error.message);
+    }
+  };
+
+  const twitterSignIn = async () => {
+    try {
+      const user = await signInWithPopup(auth, twitterAuth);
+      toast.success("signin with twitter successful");
+      console.log(user);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <section className="flex items-center  flex-col justify-center mt-[92px]">
       <figure>
@@ -42,13 +63,19 @@ const Login = () => {
       <main className="bg-white rounded-[16px] mt-[32px] px-[16px] w-[404px] drop-shadow-[0_0px_.6px_rgba(0,0,0,0.25)]">
         {/* Auth buttons */}
         <div className="mt-[24px] gap-[16px] flex flex-col items-center ">
-          <button className="flex w-full py-[12px] justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]">
+          <button
+            onClick={googleSignIn}
+            className="flex w-full py-[12px] justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]"
+          >
             <img src={google} alt="google-sigin" />
             <p className="text-[#353333] font-medium text-center text-[14px]">
               sign in with google
             </p>
           </button>
-          <button className="flex w-full py-[12px]  justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]">
+          <button
+            onClick={twitterSignIn}
+            className="flex w-full py-[12px]  justify-center border-[1px] items-center rounded-[8px] border-[#D9D8DD] gap-[8px]"
+          >
             <img src={twitter} alt="google-sigin" />
             <p className="text-[#353333] font-medium text-center text-[14px]">
               sign in with twitter
