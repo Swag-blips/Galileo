@@ -13,6 +13,7 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -48,8 +49,8 @@ const SignUp = () => {
     try {
       const user = await signInWithPopup(auth, googleAuth);
       toast.success("Sign up with google successful");
-      setPhotoUrl(user.user.photoURL);
-      setDisplayName(user.user.displayName);
+
+      console.log(user);
     } catch (error) {
       console.error(error.message);
       toast.error(error.message);
@@ -72,7 +73,6 @@ const SignUp = () => {
       <figure>
         <img src={logo} alt="logo" />
       </figure>
-
       <main className="bg-white rounded-[16px] md:mt-[32px] mt-[32px] px-[16px] w-full md:w-[404px] md:drop-shadow-[0_0px_.6px_rgba(0,0,0,0.25)]">
         {/* Auth buttons */}
         <div className="md:mt-[24px] gap-[16px] flex flex-col items-center ">
